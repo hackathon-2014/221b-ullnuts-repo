@@ -21,5 +21,6 @@
 (messaging/listen "topic.commands" handle-registration :selector "command='register'")
 (messaging/listen "topic.commands" handle-pitch :selector "command='pitch'")
 (messaging/listen "topic.commands" handle-vote :selector "command='vote'")
+(messaging/listen "topic.commands" handle-rating :selector "command='rate'")
 
 

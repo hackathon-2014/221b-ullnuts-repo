@@ -58,18 +58,21 @@
 (defn notify-user-of-average-rating
   [phone-number pitch-id]
   (send-message phone-number
-                (format "Thanks for taking part in the second opiate of the masses. That pitch now has %s votes."
+                (format "Thanks for taking the time to be all judgy. If you were an 80s star, you'd be JUDGE Rheinhold. That pitch now has an average rating of %s."
                         (average-rating-for-pitch pitch-id))))
 
-(defn handle-rate
+(defn handle-rating
   [sms]
   (let [phone-number (:From sms)
-        stars (determine-value sms)
-        num-of-stars (get (frequencies stars) \*)
+        body (determine-value sms)
+        _ (println "BODY: " body)
+        pitch-id (determine-command {:Body body})
+        _ (println "PITCH-ID: " pitch-id)
+        num-of-stars (get (frequencies body) \*)
         user (user-by-way-of-phone-number phone-number)
         event (current-active-event)]
-    (vote (:id user) pitch-id)
-    (notify-user-of-vote phone-number
-                         pitch-id)))
+    (rate (:id user) pitch-id num-of-stars)
+    (notify-user-of-average-rating phone-number
+                                   pitch-id)))
 
 
