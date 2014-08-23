@@ -6,3 +6,6 @@
             [pitch.handlers :refer :all]))
 
 (web/start app)
+(messaging/start "topic.commands")
+
+(messaging/listen "topic.commands" println :selector "command='start'")

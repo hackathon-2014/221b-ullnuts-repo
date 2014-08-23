@@ -2,15 +2,21 @@
   (:require [compojure.core :refer [defroutes routes GET]]
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
-            [compojure.route :as route])
+            [compojure.route :as route]
+            [immutant.messaging :as messaging]
+            [pitch.inbound.sms :refer [determine-command]])
   (:import [com.twilio.sdk.verbs TwiMLResponse]
            [com.twilio.sdk.verbs Message]))
 
 (defroutes app-routes
-  (GET "/sms" [From]
-       (println From)
+  (GET "/sms" {sms :params}
+       (println sms)
+       (println "COMMAND: " (determine-command sms))
+       (messaging/publish "topic.commands" 
+                          sms 
+                          :properties {:command (determine-command sms)})
        (let [r (TwiMLResponse.)
-             m (Message. From)]
+             m (Message. (pr-str sms))]
          (.append r m)
          (.toXML r)))
   (GET "/test-message" []
