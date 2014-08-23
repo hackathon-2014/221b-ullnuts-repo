@@ -8,4 +8,5 @@
   
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.immutant/immutant "1.1.4"]
-                 [mysql/mysql-connector-java "5.1.32"]])
+                 [mysql/mysql-connector-java "5.1.32"]]
+  :immutant {:context-path "/"})
