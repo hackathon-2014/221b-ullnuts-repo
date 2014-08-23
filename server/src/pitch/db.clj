@@ -62,7 +62,6 @@
                   (:id event)]))
 
 ;; Pitch Functions
-(defn add-pitch
 (defn pitch
   [user-id description]
   (insert-and-return-generated-id :pitches
