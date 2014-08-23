@@ -8,18 +8,20 @@
          :user "root"
          :password "pitch"})
 
+(defn query-and-return-first-record
+  [q]
+  (-> (jdbc/query db q)
+      first))
+
 (defn current-active-event
   []
-  (-> (jdbc/query db
-                  ["SELECT * FROM events WHERE is_open = 1 ORDER BY ID DESC LIMIT 1;"])
-      first))
+  (query-and-return-first-record ["SELECT * FROM events WHERE is_open = 1 ORDER BY ID DESC LIMIT 1;"]))
 
 (defn user-by-way-of-phone-number
   [phone-number]
-  (-> (jdbc/query db
-                  ["SELECT * FROM users WHERE phone = ? ORDER BY ID DESC LIMIT 1;"
-                   phone-number])
-      first))
+  (query-and-return-first-record 
+   ["SELECT * FROM users WHERE phone = ? ORDER BY ID DESC LIMIT 1;"
+    phone-number]))
 
 (defn insert-and-return-generated-id
   [table columns]
