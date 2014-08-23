@@ -12,6 +12,5 @@
                  [hiccup "1.0.5"]
                  [compojure "1.1.8"]
                  [com.twilio.sdk/twilio-java-sdk "3.4.4"]]
-  :plugins [[lein-ring "0.8.10"]]
-  :ring {:handler pitch.handlers/app}
+
   :immutant {:context-path "/"})
