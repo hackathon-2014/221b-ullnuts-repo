@@ -21,7 +21,7 @@
 (go 
   (while true
     (let [message (<! message-channel)]
-      (println "Attepting Send")
+      (println "Attepting Send" message)
       (twilio/with-auth (config/sid) (config/token)
         (twilio/send message))
-      (println "Sent"))))
+      (println "Sent" message))))

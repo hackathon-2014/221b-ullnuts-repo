@@ -56,11 +56,30 @@
     id]))
 
 
+(defn user-by-event
+  [event]
+  (jdbc/query db ["SELECT * FROM users WHERE event_id = ? ORDER BY ID DESC;"
+                  (:id event)]))
+
+;; Pitch Functions
+(defn add-pitch
 (defn pitch
   [user-id description]
   (insert-and-return-generated-id :pitches
                                   {:user_id user-id :description description}))
 
+(defn drop-pitch
+  [pitch]
+  (jdbc/delete! db :pitches ["id = ?" (:id pitch)])
+  pitch)
+
+(defn pitch-by-id
+  [id]
+  (query-and-return-first-record 
+   ["SELECT * FROM pitches WHERE id = ? ORDER BY ID DESC LIMIT 1;"
+    id]))
+
+;; Vote Functions
 (defn vote
   [user-id pitch-id]
   (insert-and-return-generated-id :votes
