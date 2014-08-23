@@ -1,3 +1,50 @@
 // Place all the styles related to the Pitches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.bb {
+  border: 1px solid black;
+}
+
+.rightalign {
+  text-align: right;
+}
+
+div.votes {
+  margin: 0.1em;
+  background-color: #EEE;
+  text-align: center;
+  max-width: 8em;
+  max-height: 8em;
+  padding-bottom: 0.5em;
+  // float: right;
+}
+
+div.pitch {
+  margin-bottom: 1em;
+  border-bottom: 1px solid #EEE;
+  padding-bottom: 1em;
+}
+
+h1 {
+  color: red;
+}
+
+h1.ls {
+  font-size: 3em;
+  color: #777;
+}
+
+h1.ss {
+  font-size: 2em; 
+  color: #777;
+}
+
+h4.ls {
+  font-size: 1.5em;
+  color: #777;
+}
+
+h4.ss {
+  font-size: 1em;
+  color: #777;
+}

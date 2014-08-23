@@ -1,0 +1,17 @@
+%h1 Pitches
+%table
+  %thead
+    %tr
+      %th Name
+      %th Open?
+      %th{:colspan => "3"}
+  %tbody
+    - @events.each do |event|
+      %tr
+        %td= event.name
+        %td= event.is_open
+        %td= link_to 'Show', event
+        %td= link_to 'Edit', edit_event_path(event)
+        %td= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }
+%br
+  = link_to 'New Event', new_event_path
