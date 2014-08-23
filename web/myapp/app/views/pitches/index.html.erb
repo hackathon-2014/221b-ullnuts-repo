@@ -5,7 +5,8 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>User</th>
+      <th>Participant</th>
+      <th>Votes</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +16,8 @@
       <tr>
         <td><%= pitch.name %></td>
         <td><%= pitch.description %></td>
-        <td><%= pitch.user_id %></td>
+        <td><%= pitch.user.name %></td>
+        <td><%= pitch.votes.count %></td>
         <td><%= link_to 'Show', pitch %></td>
         <td><%= link_to 'Edit', edit_pitch_path(pitch) %></td>
         <td><%= link_to 'Destroy', pitch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
