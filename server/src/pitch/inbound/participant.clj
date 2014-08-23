@@ -7,6 +7,6 @@
   (let [name (determine-value sms)
         phone-number (:From sms)
         event (current-active-event)]
-    (register-user value
+    (register-user name
                    phone-number
                    (:id event))))

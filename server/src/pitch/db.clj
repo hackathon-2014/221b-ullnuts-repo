@@ -26,7 +26,7 @@
 (defn set-active-event
   [name]
   (close-active-events)
-  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeInMillis))}))
+  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeMillis))}))
 
 
 (defn user-by-way-of-phone-number
