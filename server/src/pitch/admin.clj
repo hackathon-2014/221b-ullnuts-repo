@@ -20,7 +20,7 @@
   [message]
   (println "VETO: " message))
 
-(messaging/listen "topic.commands" :selector {:command "start"} handle-start)
-(messaging/listen "topic.commands" :selector {:command "end"} handle-end)
-(messaging/listen "topic.commands" :selector {:command "notify"} handle-notify)
-(messaging/listen "topic.commands" :selector {:command "veto"} handle-veto)
+(messaging/listen "topic.commands" handle-start :selector "command='start'")
+(messaging/listen "topic.commands" handle-end :selector "command='end'")
+(messaging/listen "topic.commands" handle-notify :selector "command='notify'")
+(messaging/listen "topic.commands" handle-veto :selector "command='veto'")
