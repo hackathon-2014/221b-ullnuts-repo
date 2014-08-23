@@ -7,6 +7,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/java.jdbc "0.3.5"]
                  [org.immutant/immutant-jobs "1.1.4"]
                  [org.immutant/immutant-messaging "1.1.4"]
                  [org.immutant/immutant-web "1.1.4"]
