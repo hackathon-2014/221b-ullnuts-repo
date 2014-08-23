@@ -18,7 +18,7 @@
 (defn open-event
   [message]
   (let [event (db/set-active-event (sms/determine-value message))]
-    (assoc event :hbic (db/register-or-reconcile-user "HBIC" (:From message) (:event)))))
+    (assoc event :hbic (db/user-by-id (db/register-user "HBIC" (:From message) (:id event))))))
 
 (defn veto-pitch
   [pitch-id]

@@ -49,13 +49,12 @@
                                    :phone phone-number 
                                    :event_id event-id}))
 
-(defn register-or-reconcile-user
-  [name phone-number event-id]
-  (if-let [user (user-by-way-of-phone-number phone-number)]
-    user
-    (do 
-      (register-user name phone-number event-id)
-      (user-by-way-of-phone-number phone-number))))
+(defn user-by-id
+  [id]
+  (query-and-return-first-record 
+   ["SELECT * FROM users WHERE id = ? ORDER BY ID DESC LIMIT 1;"
+    id]))
+
 
 (defn pitch
   [user-id description]
