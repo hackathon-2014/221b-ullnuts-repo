@@ -26,7 +26,8 @@
 (defn set-active-event
   [name]
   (close-active-events)
-  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeMillis))}))
+  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeMillis))})
+  (current-active-event))
 
 
 (defn user-by-way-of-phone-number
@@ -48,7 +49,15 @@
                                    :phone phone-number 
                                    :event_id event-id}))
 
-(defn add-pitch
+(defn register-or-reconcile-user
+  [name phone-number event-id]
+  (if-let [user (user-by-way-of-phone-number phone-number)]
+    user
+    (do 
+      (register-user name phone-number event-id)
+      (user-by-way-of-phone-number phone-number))))
+
+(defn pitch
   [user-id description]
   (insert-and-return-generated-id :pitches
                                   {:user_id user-id :description description}))
@@ -57,3 +66,18 @@
   [user-id pitch-id]
   (insert-and-return-generated-id :votes
                                   {:user_id user-id :pitch_id pitch-id}))
+
+(defn number-of-votes
+  [pitch-id]
+  (:v (query-and-return-first-record ["SELECT count(*) as v FROM votes WHERE pitch_id =?" pitch-id])) )
+
+(defn rate
+  [user-id pitch-id rating]
+  (insert-and-return-generated-id :ratings
+                                  {:user_id user-id :pitch_id pitch-id :rating_value rating}))
+
+(defn average-rating-for-pitch
+  [pitch-id]
+  (-> (query-and-return-first-record ["SELECT AVG(rating_value) as a FROM ratings WHERE pitch_id =?" pitch-id])
+      :a
+      int))

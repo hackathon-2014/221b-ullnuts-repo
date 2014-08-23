@@ -38,3 +38,5 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'seed_dump'
+gem 'foundation-rails', '~> 5.1.0.0'
+gem 'haml-rails'

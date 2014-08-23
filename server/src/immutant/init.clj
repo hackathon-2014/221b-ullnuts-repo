@@ -19,5 +19,7 @@
 ;; (messaging/listen "topic.commands" handle-start :selector "command='start'")
 
 (messaging/listen "topic.commands" handle-registration :selector "command='register'")
+(messaging/listen "topic.commands" handle-pitch :selector "command='pitch'")
+(messaging/listen "topic.commands" handle-vote :selector "command='vote'")
 
 
