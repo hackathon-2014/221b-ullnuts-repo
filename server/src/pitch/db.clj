@@ -17,6 +17,18 @@
   []
   (query-and-return-first-record ["SELECT * FROM events WHERE is_open = 1 ORDER BY ID DESC LIMIT 1;"]))
 
+(defn close-active-events
+  []
+  (let [active (current-active-event)]
+    (jdbc/update! db :events {:is_open 0} ["is_open = ?" 1])
+    active))
+
+(defn set-active-event
+  [name]
+  (close-active-events)
+  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeInMillis))}))
+
+
 (defn user-by-way-of-phone-number
   [phone-number]
   (query-and-return-first-record 
