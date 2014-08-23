@@ -6,10 +6,16 @@
 
 (def url "http://54.164.169.20:3000/​")
 
+(defn printit
+  [x]
+  (println "PRINTING: " x)
+  x)
 
 (defn event-subscribers
-  [event]
-  ["+18436700979" "+18037385811"])
+  [_]
+  (->> (db/current-active-event)
+    db/user-by-event
+    (map :phone)))
 
 (defn close-event
   []
@@ -18,17 +24,20 @@
 (defn open-event
   [message]
   (let [event (db/set-active-event (sms/determine-value message))]
-    (assoc event :hbic (db/register-or-reconcile-user "HBIC" (:From message) (:event)))))
+    (assoc event :hbic (db/user-by-id (db/register-user "HBIC" (:From message) (:id event))))))
 
 (defn veto-pitch
   [pitch-id]
-  )
+  (-> pitch-id
+    db/pitch-by-id
+    db/drop-pitch))
 
 (defn handle-start
   [message]
   (-> message
     open-event
-    (get-in [:hbic :phone])
+    :hbic
+    :phone
     (broadcast/send-message (str "Event '" (sms/determine-value message) "' Has Started: " url))))
 
 
@@ -36,7 +45,7 @@
   [message]
   (-> (close-event)
     event-subscribers
-    (broadcast/send-message ("Event Has Closed: " url))))
+    (broadcast/send-message (str "Event Has Closed: " url))))
 
 
 (defn handle-notify
@@ -48,7 +57,9 @@
 
 (defn handle-veto
   [message]
-  (-> message
-    sms/determine-value
-    veto-pitch))
+  (let [pitch (-> message
+                sms/determine-value
+                veto-pitch)
+        user (db/user-by-id (:user_id pitch))]
+    (broadcast/send-message (:phone user) (str "Your pitch '" (:description pitch) "' has been vetoed.  Deal with it."))))
 

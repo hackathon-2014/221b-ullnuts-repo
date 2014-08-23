@@ -49,19 +49,36 @@
                                    :phone phone-number 
                                    :event_id event-id}))
 
-(defn register-or-reconcile-user
-  [name phone-number event-id]
-  (if-let [user (user-by-way-of-phone-number phone-number)]
-    user
-    (do 
-      (register-user name phone-number event-id)
-      (user-by-way-of-phone-number phone-number))))
+(defn user-by-id
+  [id]
+  (query-and-return-first-record 
+   ["SELECT * FROM users WHERE id = ? ORDER BY ID DESC LIMIT 1;"
+    id]))
 
+
+(defn user-by-event
+  [event]
+  (jdbc/query db ["SELECT * FROM users WHERE event_id = ? ORDER BY ID DESC;"
+                  (:id event)]))
+
+;; Pitch Functions
 (defn pitch
   [user-id description]
   (insert-and-return-generated-id :pitches
                                   {:user_id user-id :description description}))
 
+(defn drop-pitch
+  [pitch]
+  (jdbc/delete! db :pitches ["id = ?" (:id pitch)])
+  pitch)
+
+(defn pitch-by-id
+  [id]
+  (query-and-return-first-record 
+   ["SELECT * FROM pitches WHERE id = ? ORDER BY ID DESC LIMIT 1;"
+    id]))
+
+;; Vote Functions
 (defn vote
   [user-id pitch-id]
   (insert-and-return-generated-id :votes
