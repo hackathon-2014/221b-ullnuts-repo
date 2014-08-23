@@ -4,7 +4,8 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [immutant.messaging :as messaging]
-            [pitch.inbound.sms :refer [determine-command]])
+            [pitch.inbound.sms :refer [determine-command]]
+            [pitch.admin])
   (:import [com.twilio.sdk.verbs TwiMLResponse]
            [com.twilio.sdk.verbs Message]))
 
