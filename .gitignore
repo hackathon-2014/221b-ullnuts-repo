@@ -13,3 +13,8 @@ pom.xml.asc
 .settings
 .classpath
 .lein*
+\#*
+*~
+.#*
+\#*\#
+*.log
