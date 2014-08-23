@@ -4,7 +4,8 @@ class PitchesController < ApplicationController
   # GET /pitches
   # GET /pitches.json
   def index
-    @pitches = Pitch.all
+    @pitches = Pitch.select("pitches.*, COUNT(votes.id) AS tally").joins(:votes).group("pitches.id")
+    @pitches = @pitches.order("tally DESC")
   end
 
   # GET /pitches/1
