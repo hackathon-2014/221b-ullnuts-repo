@@ -13,12 +13,12 @@
 
 (defn close-event
   []
-  (close-active-events))
+  (db/close-active-events))
 
 (defn open-event
   [message]
-  (db/set-active-event (sms/determine-value message))
-  message)
+  (let [event (db/set-active-event (sms/determine-value message))]
+    (assoc event :hbic (db/register-or-reconcile-user "HBIC" (:From message) (:event)))))
 
 (defn veto-pitch
   [pitch-id]
@@ -28,8 +28,8 @@
   [message]
   (-> message
     open-event
-    :From
-    (broadcast/send-message (str "Event '" (sms/determine-value message) "' Has Started: " url)))
+    (get-in [:hbic :phone])
+    (broadcast/send-message (str "Event '" (sms/determine-value message) "' Has Started: " url))))
 
 
 (defn handle-end

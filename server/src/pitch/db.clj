@@ -26,7 +26,8 @@
 (defn set-active-event
   [name]
   (close-active-events)
-  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeInMillis))}))
+  (jdbc/insert! db :events {:name name :is_open 1 :created_at (new java.sql.Timestamp (System/currentTimeMillis))})
+  (current-active-event))
 
 
 (defn user-by-way-of-phone-number
@@ -47,6 +48,14 @@
                                   {:name name 
                                    :phone phone-number 
                                    :event_id event-id}))
+
+(defn register-or-reconcile-user
+  [name phone-number event-id]
+  (if-let [user (user-by-way-of-phone-number phone-number)]
+    user
+    (do 
+      (register-user name phone-number event-id)
+      (user-by-way-of-phone-number phone-number))))
 
 (defn add-pitch
   [user-id description]
