@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @pitch.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @pitch.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @pitch.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_pitch_path(@pitch) %> |
+<%= link_to 'Back', pitches_path %>
