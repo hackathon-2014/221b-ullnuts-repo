@@ -16,10 +16,7 @@
        (messaging/publish "topic.commands" 
                           sms 
                           :properties {:command (determine-command sms)})
-       (let [r (TwiMLResponse.)
-             m (Message. (pr-str sms))]
-         (.append r m)
-         (.toXML r)))
+       "")
   (GET "/test-message" []
        "<html><a href='sms:8436089719?body=helloworld'>Test</a></html>")
   (route/not-found "Not Found"))
