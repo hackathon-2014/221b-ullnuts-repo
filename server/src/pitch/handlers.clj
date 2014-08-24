@@ -5,7 +5,9 @@
             [compojure.route :as route]
             [immutant.messaging :as messaging]
             [pitch.inbound.sms :refer [determine-command]]
-            [pitch.admin])
+            [pitch.admin]
+            [clojure.data.json :as json]
+            [pitch.db :as db])
   (:import [com.twilio.sdk.verbs TwiMLResponse]
            [com.twilio.sdk.verbs Message]))
 
@@ -19,6 +21,9 @@
        "")
   (GET "/test-message" []
        "<html><a href='sms:8436089719?body=helloworld'>Test</a></html>")
+  
+  (GET "/api/event" []
+       (json/write-str (db/current-active-event)))
   (route/not-found "Not Found"))
 
 (def app
