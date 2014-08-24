@@ -65,7 +65,9 @@
 (defn pitch
   [user-id description]
   (insert-and-return-generated-id :pitches
-                                  {:user_id user-id :description description}))
+                                  {:user_id user-id 
+                                   :description description
+                                   :name description}))
 
 (defn drop-pitch
   [pitch]
