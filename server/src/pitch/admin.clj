@@ -61,5 +61,9 @@
                 sms/determine-value
                 veto-pitch)
         user (db/user-by-id (:user_id pitch))]
-    (broadcast/send-message (:phone user) (str "Your pitch '" (:description pitch) "' has been vetoed.  Deal with it."))))
+    (broadcast/send-message (:phone user) (str "Your pitch '" (:title pitch) "' has been vetoed.  Deal with it."))))
 
+
+(defn handle-url
+  [message]
+  url)
