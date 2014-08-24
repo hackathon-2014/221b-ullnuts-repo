@@ -1,29 +1,11 @@
-%h1 Session Pitches
-/ %table
-/   %thead
-/     %tr
-/       %th Name
-/       %th Description
-/       %th Participant
-/       %th Votes
-/       %th{:colspan => "3"}
-/   %tbody
-/     - @pitches.each do |pitch|
-/       %tr
-/         %td= pitch.name
-/         %td= pitch.description
-/         %td= pitch.user.name
-/         %td= pitch.votes.count
-/         %td= link_to 'Show', pitch
-/         %td= link_to 'Edit', edit_pitch_path(pitch)
-/         %td= link_to 'Destroy', pitch, method: :delete, data: { confirm: 'Are you sure?' }
+%img{:src => "/assets/logo.png"}
 %br
-  = link_to 'New Pitch', new_pitch_path
+  / = link_to 'New Pitch', new_pitch_path
   - @pitches.each do |pitch|
     %div.row.pitch
       %div.small-3.column
         %div.votes
-          %h1.ls.show-for-medium-up= pitch.votes.count
+          %h1.ls.show-for-medium-up.votetext= pitch.votes.count
           %h4.ls.show-for-medium-up votes
           %h1.ss.show-for-small= pitch.votes.count
           %h4.ss.show-for-small votes
@@ -33,8 +15,6 @@
         %h4.ls.show-for-medium-up= pitch.user.name
         %h1.ss.show-for-small= pitch.name
         %h4.ss.show-for-small= pitch.user.name
-
-
 
         / %div= link_to 'Show', pitch
         / %div= link_to 'Edit', edit_pitch_path(pitch)
