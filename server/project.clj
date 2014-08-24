@@ -17,7 +17,6 @@
                  [org.clojure/core.async "0.1.338.0-5c5012-alpha"]
                  [hiccup "1.0.5"]
                  [compojure "1.1.8"]
-                 [com.twilio.sdk/twilio-java-sdk "3.4.4"]
-                 [org.clojure/data.json "0.2.5"]]
+                 [com.twilio.sdk/twilio-java-sdk "3.4.4"]]
 
   :immutant {:context-path "/"})
