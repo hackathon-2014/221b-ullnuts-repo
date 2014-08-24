@@ -61,6 +61,7 @@
                 (format "Thanks for taking the time to be all judgy. If you were an 80s star, you'd be JUDGE Rheinhold. That pitch now has an average rating of %s."
                         (average-rating-for-pitch pitch-id))))
 
+
 (defn handle-rating
   [sms]
   (let [phone-number (:From sms)
