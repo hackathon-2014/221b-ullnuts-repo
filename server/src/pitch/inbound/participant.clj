@@ -1,9 +1,7 @@
 (ns pitch.inbound.participant
   (:require [pitch.db :refer :all]
             [pitch.broadcast :refer :all]
-            [pitch.inbound.sms :refer :all]
-            )
-  (:import [com.ibm.common.activitystreams Makers]))
+            [pitch.inbound.sms :refer :all]))
 
 (defn welcome-user-to-event
   [name phone-number event]
